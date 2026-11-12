@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Manrope Variable", system-ui, sans-serif;
+  --font-text:"Inter Variable", system-ui, sans-serif
+  --color-fundo: #F7F6F2;
+  --color-texto:#242424 ;
+  --color-cards: #FFFF;
+  --color-terracota-100:#9A4C37 ;
+  --color-terracota-200:#B75E45 ;
+  --color-salvia-100:#D7DFCF ;
+  --color-salvia-200:#8C9C80 ;
+  --color-superfice: #E8D9C8;   
+}
+
+@layer components {
+  .container{
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .container2 {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  
+}
+
+body{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
