@@ -2,8 +2,8 @@
 
 
 @theme {
-  --font-display: "Manrope Variable", system-ui, sans-serif;
-  --font-text:"Inter Variable", system-ui, sans-serif
+  --font-display: "Manrope", system-ui, sans-serif;
+  --font-text:"Inter", system-ui, sans-serif
   --color-fundo: #F7F6F2;
   --color-texto:#242424 ;
   --color-cards: #FFFF;
@@ -29,6 +29,29 @@
     padding-inline: 1.5rem;
   }
   
+  .scroll-lume {
+  scrollbar-width: thin;
+  scrollbar-color: #B75E45 #F7F6F2;
+}
+
+/* Chrome, Edge e Safari */
+.scroll-lume::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-lume::-webkit-scrollbar-track {
+  background: #F7F6F2;
+  border-radius: 10px;
+}
+
+.scroll-lume::-webkit-scrollbar-thumb {
+  background: #B75E45;
+  border-radius: 10px;
+}
+
+.scroll-lume::-webkit-scrollbar-thumb:hover {
+  background: #964832;
+}
 }
 
 body{
@@ -36,4 +59,5 @@ body{
   margin: 0;
   padding: 0;
   background-color: #F7F6F2;
+  font-family:"Manrope", system-ui, sans-serif; 
 }

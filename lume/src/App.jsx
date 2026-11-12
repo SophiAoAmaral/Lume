@@ -2,6 +2,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Home } from "./components/Home";
+import { Busca } from "./components/Busca";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home/>}/>
+         <Route path="/busca" element={<Busca />} />
       </Routes>
 
       <Footer />
