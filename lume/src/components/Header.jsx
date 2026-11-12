@@ -10,10 +10,11 @@ export const Header = () => {
         setInput(true)
     }
   return (
-    <header className='container flex justify-between mt-7 items-center'>
-        <img src={logo} alt="" className='w-40 object-contain' />
+    <header className='border-b border-gray-300 font-display'>
+    <div className='container flex justify-between my-5 items-center '>
+        <Link to='/'><img src={logo} alt="" className='w-40 object-contain' /></Link>
         <nav >
-            <ul className='flex gap-6'>
+            <ul className='flex gap-6 '>
                 <li>
                     <Link to='/'>Home</Link>
                 </li>
@@ -44,6 +45,7 @@ export const Header = () => {
             <Link>{islogded ? 'Sua conta' : 'Criar conta' }</Link>
         </div>
 
+    </div>
     </header>
   )
 }
