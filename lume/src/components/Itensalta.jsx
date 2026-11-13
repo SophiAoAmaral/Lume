@@ -35,7 +35,7 @@ export const Itensalta = () => {
 return (
   <div className="mt-20">
     {loading ? (
-      // Enquanto estiver carregando
+     
       <div className="flex gap-5 overflow-hidden">
         {Array.from({ length: 10 }).map((_, index) => (
           <div key={index} className="w-[150px] shrink-0">
@@ -46,13 +46,13 @@ return (
       </div>
     ) : (
       // Quando terminar de carregar
-      <div className="flex gap-5 overflow-x-auto">
+      <div className="flex gap-5 overflow-x-auto ">
         {data.map((item) => (
           <div key={item.key} className="w-[150px] shrink-0">
             <img
               src={`https://covers.openlibrary.org/b/id/${item.cover_i ?? item.cover_id}-M.jpg`}
               alt={item.title}
-              className="w-full h-[220px] object-cover rounded-lg"
+              className="w-full h-[220px] object-cover rounded-lg transition-transform duration-300 ease-in-out hover:-translate-y-2 cursor-pointer"
             />
 
             <h3>{item.title}</h3>
