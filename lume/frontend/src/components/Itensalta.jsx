@@ -44,7 +44,7 @@ return (
         <span className="font-bold text-terracota-100 text-sm">Em alta esta semana</span>
         <h2 className="text-4xl font-medium mt-2">Tá todo mundo lendo.</h2>
       </div>
-      <button onClick={() => navigate()} className="border py-2 px-4 rounded-xl cursor-pointer" >Ver Todos</button>
+      <button onClick={() => navigate("/busca?tipo=trending")} className="border py-2 px-4 rounded-xl cursor-pointer" >Ver Todos</button>
     </div>
     {loading ? (
       <div className="flex gap-5 overflow-hidden">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import logo from '/logo.png?url'
-import { Link } from 'react-router'
+import { Link, NavLink } from 'react-router'
 import { Search } from "lucide-react";
 
 export const Header = () => {
@@ -19,7 +19,7 @@ export const Header = () => {
                     <Link to='/'>Home</Link>
                 </li>
                 <li>
-                    <Link to='explorar'>Explorar</Link>
+                    <NavLink to='/busca?tipo=explorar'>Explorar</NavLink>
                 </li>
                 <li>
                     <Link to='minhabiblioteca'>Minha Biblioteca</Link>

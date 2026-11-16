@@ -17,6 +17,30 @@ export const Busca = () => {
     const tipo = searchParams.get("tipo");
     const genero = searchParams.get("genero");
 
+    const nomesGeneros = {
+      romance: "Romance",
+      fantasy: "Fantasia",
+      horror: "Terror",
+      humor: "Humor",
+      thriller: "Suspense",
+      philosophy: "Reflexão",
+    };
+
+
+    let titulo = "";
+
+    if (tipo === "trending") {
+      titulo = "Livros em alta nesta semana";
+    } else if(tipo === "explorar"){
+       titulo = "Explore novos livros"
+    }else if (genero) {
+      titulo = `Resultados para: ${nomesGeneros[genero] || genero}`;
+    } else if (query) {
+      titulo = `Resultados para: ${query}`;
+    };
+
+
+
 
 
 async function handleFetch() {
@@ -28,7 +52,9 @@ async function handleFetch() {
 
  if (tipo === "trending") {
    url = "https://openlibrary.org/trending/weekly.json?limit=20";
- } else if (genero) {
+ }else if( tipo === 'explorar') {
+  url = "https://openlibrary.org/search.json?q=fiction&limit=30"
+ }else if (genero) {
    url = `https://openlibrary.org/search.json?subject=${encodeURIComponent(genero)}&limit=20`;
  } else if (query) {
    url = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=20`;
@@ -72,7 +98,7 @@ useEffect(()=>{
 
   return (
     <section className="container mt-5 flex flex-col items-center justify-center gap-5">
-      {error ? "" : <h1>Resultados para : {query}</h1>}
+      {error ? "" : <h1>{titulo}</h1>}
       {error && (
         <div
           role="alert"
