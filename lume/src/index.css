@@ -34,7 +34,6 @@
   scrollbar-color: #B75E45 #F7F6F2;
 }
 
-/* Chrome, Edge e Safari */
 .scroll-lume::-webkit-scrollbar {
   height: 6px;
 }

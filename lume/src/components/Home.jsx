@@ -3,10 +3,17 @@ import { Link, useNavigate } from 'react-router';
 import tumb from '../images/tumb.png'
 import { Search } from "lucide-react";
 import { Itensalta } from './Itensalta';
+import { Explorar } from './Explorar';
 
 export const Home = () => {
     const [search, setSearch] = useState("");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const sugestoes = [
+      { nome: "Clarice Lispector", busca: "Clarice Lispector" },
+      { nome: "Ficção científica", busca: "Ficção científica" },
+      { nome: "Literatura brasileira", busca: "Literatura brasileira" },
+      { nome: "Romance histórico", busca: "Romance histórico" },
+    ];
 
     function handleSubmit(e){
         e.preventDefault();
@@ -40,10 +47,18 @@ export const Home = () => {
                     </form>
 
                     <div>
-                        <ul>
-                            <span>Populares</span>
-                            <Link></Link>
-                        </ul>
+                        <span className='mb-2 block'>Populares: </span>
+                        <div className='flex flex-wrap gap-2'>
+                            {sugestoes.map((item)=>(
+                                <button
+                                key={item.nome}
+                                onClick={()=>  navigate(`/busca?q=${encodeURIComponent(item.busca)}`)}
+                                className='cursor-pointer border border-[#E0DBD0] text-[#3F3D39] py-2 px-4 rounded-xl text-sm hover:bg-terracota-100 hover:text-white transition my-1 mr-1 '
+                                >
+                                    {item.nome}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
@@ -55,6 +70,9 @@ export const Home = () => {
 
 
             <Itensalta/>
+
+
+            <Explorar/>
         </section>
     
   )
