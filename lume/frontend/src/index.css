@@ -51,6 +51,27 @@
 .scroll-lume::-webkit-scrollbar-thumb:hover {
   background: #964832;
 }
+
+.detail:before{
+  position: absolute;
+  content: '';
+  width: 170px;
+  height: 2px;
+  top: 50%;
+  left: 30px;
+  background-color: #E0DBD0;
+}
+
+.detail::after{
+  position: absolute;
+  content: '';
+  width: 170px;
+  height: 2px;
+  top: 50%;
+  right: 30px;
+  background-color: #E0DBD0;
+}
+
 }
 
 body{
