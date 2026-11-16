@@ -42,7 +42,7 @@ export const Header = () => {
 
             </div>
             
-            <Link>{islogded ? 'Sua conta' : 'Criar conta' }</Link>
+            <NavLink to='/login'>{islogded ? 'Sua conta' : 'Criar conta' }</NavLink>
         </div>
 
     </div>
