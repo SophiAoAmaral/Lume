@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import semcapa from '../images/semcapa.png'
 
 
@@ -8,6 +8,7 @@ import semcapa from '../images/semcapa.png'
 
 export const Busca = () => {
     const [loading, setLoading] = useState(false)
+    
     const [data, setData] = useState([])
     const [error, setError] = useState(false)
     const [message, setMessage] = useState('')
