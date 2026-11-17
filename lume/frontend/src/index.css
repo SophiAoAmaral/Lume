@@ -72,6 +72,11 @@
   background-color: #E0DBD0;
 }
 
+.background{
+  background: url(images/background.png);
+  height: 95vh;
+}
+
 }
 
 body{
