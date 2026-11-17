@@ -6,14 +6,14 @@ import tumb from '../../images/fotologin.png'
 export const Login = () => {
   const navigate = useNavigate()
   return (
-    <section className="container">
+    <section className="container mt-30">
       <div className="grid grid-cols-2 ">
         <div className='flex flex-col items-center'>
           <div >
             <img src={logo} alt="" className="w-40" />
           </div>
-          <h1>Que bom te ver de novo.</h1>
-          <p>Entre para continuar de onde parou</p>
+          <h1 className='text-3xl font-bold'>Que bom te ver de novo.</h1>
+          <p className='text-black/50'>Entre para continuar de onde parou</p>
 
           <form action="" className='flex flex-col'>
             <label htmlFor="email" className='block font-semibold text-sm mt-5'>Email</label>
@@ -27,8 +27,8 @@ export const Login = () => {
           <span className='detail relative text-sm mt-3 text-black/50'>ou</span>
           <button onClick={() => navigate("/")} className='bg-white border border-[#E0DBD0] font-medium w-100 py-2 rounded-2xl mt-5 cursor-pointer'>Explorar sem conta</button>
 
-          <p>
-            Ainda nao tem conta? <Link to="/criar">Criar conta</Link>
+          <p className='font-medium text-sm mt-4 text-black/50'>
+            Ainda nao tem conta? <Link to="/criar" className='text-terracota-200 '>Criar conta</Link>
           </p>
         </div>
         <div className='bg-[#E8D9C8]'>
