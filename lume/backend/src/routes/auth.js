@@ -6,31 +6,53 @@ const router = Router();
 
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body ?? {};
+   const { name, email, password } = req.body ?? {};
 
-    if (
-      typeof name !== "string" ||
-      typeof email !== "string" ||
-      typeof password !== "string"
-    ) {
-      return res.status(400).json({
-        message: "Dados inválidos"
-      });
-    }
+const errors = {};
 
-    const cleanName = name.trim();
-    const cleanEmail = email.trim().toLowerCase();
+if (
+  typeof name !== "string" ||
+  name.trim().length < 2 ||
+  name.trim().length > 100
+) {
+  errors.name = "O nome deve ter entre 2 e 100 caracteres.";
+}
+
+if (
+  typeof email !== "string" ||
+  email.trim().length > 255 ||
+  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+) {
+  errors.email = "Informe um e-mail válido.";
+}
+
+if (
+  typeof password !== "string" ||
+  password.length < 8 ||
+  Buffer.byteLength(password, "utf8") > 1024
+) {
+  errors.password = "A senha deve ter pelo menos 8 caracteres.";
+} 
+if (Object.keys(errors).length > 0) {
+  return res.status(400).json({
+    message: "Verifique os campos do formulário.",
+    errors
+  });
+}
+
+const cleanName = name.trim();
+const cleanEmail = email.trim().toLowerCase();
 
     if (
       cleanName.length < 2 ||
       cleanName.length > 100 ||
       cleanEmail.length > 255 ||
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail) ||
-      password.length < 12 ||
+      password.length < 8 ||
       Buffer.byteLength(password, "utf8") > 1024
     ) {
       return res.status(400).json({
-        message: "Informe nome, e-mail válido e senha de pelo menos 12 caracteres"
+        message: "Verifique os dados informados e tente novamente"
       });
     }
 

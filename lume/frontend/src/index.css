@@ -75,6 +75,22 @@
 .background{
   background: url(images/background.png);
   height: 95vh;
+  background-size: cover;
+}
+
+.label{
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.linha{
+  position: absolute;
+  content: '';
+  width: 70%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.144);
+  top: 5px;
 }
 
 }
@@ -85,4 +101,11 @@ body{
   padding: 0;
   background-color: #F7F6F2;
   font-family:"Manrope", system-ui, sans-serif; 
+}
+
+input::placeholder {
+  color: #999595;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 1;
 }
