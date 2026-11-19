@@ -14,6 +14,7 @@ export const Login = () => {
   const [error, setError] = useState("");
   const {setUser} = useUser();
   const location = useLocation();
+  const [showPassword, setShowPassword] = useState(false)
   const [successMessage, setSuccessMessage] = useState(
   location.state?.message || ""
 );
@@ -103,16 +104,28 @@ useEffect(() => {
             >
               Senha
             </label>
-            <input
-              type="password"
-              name="password"
-              placeholder='Mínimo de 8 caracteres'
-              id="password"
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              className={`${error ? "border-red-500" : "border-[#E0DBD0]"} border w-100 rounded-2xl py-2 px-4 bg-white border-[#E0DBD0] outline-0`}
-            />
+            <div
+              className={` ${error ? "border-red-500" : "border-[#E0DBD0]"} border border-[#E0DBD0]  w-100 rounded-2xl py-2 px-4   outline-0  flex  `}
+            >
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                id="password"
+                placeholder="Mínimo de 8 caracteres"
+                value={password}
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-[100%] outline-0"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-xs font-semibold"
+                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+              >
+                {showPassword ? "Ocultar" : "Mostrar"}
+              </button>
+            </div>
             <Link
               to="/esqueciminhasenha"
               className="block mb-5 mt-2 text-xs text-end text-terracota-200 font-semibold  self-end"

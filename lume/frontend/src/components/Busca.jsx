@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 import semcapa from '../images/semcapa.png'
+import { Link } from 'react-router'
 
 
 
@@ -120,7 +121,7 @@ useEffect(()=>{
       ) : (
         <div className=" grid grid-cols-4 mt-10 gap-20">
           {data.map((data) => (
-            <div key={data.key} className="w-[220px]">
+            <Link  key={data.key} to={`/livro/${data.key.split("/").pop()}`} className="w-[220px]">
               <img
                 src={
                   (data.cover_i ?? data.cover_id)
@@ -132,7 +133,7 @@ useEffect(()=>{
               />
               <h1>{data.title}</h1>
               <span>{data.author_name}</span>
-            </div>
+            </Link>
           ))}
         </div>
       )}
