@@ -1,4 +1,4 @@
-
+import translateRoutes from "./routes/translate.js";
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
@@ -55,6 +55,9 @@ app.use(session({
 
 // Rotas de autenticação
 app.use("/api/auth", authRoutes);
+
+
+app.use("/api/translate", translateRoutes);
 
 // Health Check
 app.get("/api/health", (req, res) => {
