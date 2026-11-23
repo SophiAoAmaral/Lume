@@ -4,62 +4,57 @@ import { pool } from "../database.js";
 
 const router = Router();
 
+
 router.post("/register", async (req, res) => {
   try {
-   const { name, email, password } = req.body ?? {};
+    const { name, email, password } = req.body ?? {};
 
-const errors = {};
+    const errors = {};
 
-if (
-  typeof name !== "string" ||
-  name.trim().length < 2 ||
-  name.trim().length > 100
-) {
-  errors.name = "O nome deve ter entre 2 e 100 caracteres.";
-}
-
-if (
-  typeof email !== "string" ||
-  email.trim().length > 255 ||
-  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
-) {
-  errors.email = "Informe um e-mail válido.";
-}
-
-if (
-  typeof password !== "string" ||
-  password.length < 8 ||
-  Buffer.byteLength(password, "utf8") > 1024
-) {
-  errors.password = "A senha deve ter pelo menos 8 caracteres.";
-} 
-if (Object.keys(errors).length > 0) {
-  return res.status(400).json({
-    message: "Verifique os campos do formulário.",
-    errors
-  });
-}
-
-const cleanName = name.trim();
-const cleanEmail = email.trim().toLowerCase();
-
+    // Validar nome
     if (
-      cleanName.length < 2 ||
-      cleanName.length > 100 ||
-      cleanEmail.length > 255 ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail) ||
+      typeof name !== "string" ||
+      name.trim().length < 2 ||
+      name.trim().length > 100
+    ) {
+      errors.name = "O nome deve ter entre 2 e 100 caracteres.";
+    }
+
+    // Validar e-mail
+    if (
+      typeof email !== "string" ||
+      email.trim().length > 255 ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+    ) {
+      errors.email = "Informe um e-mail válido.";
+    }
+
+    // Validar senha
+    if (
+      typeof password !== "string" ||
       password.length < 8 ||
       Buffer.byteLength(password, "utf8") > 1024
     ) {
+      errors.password = "A senha deve ter pelo menos 8 caracteres.";
+    }
+
+    // Retornar todos os erros encontrados
+    if (Object.keys(errors).length > 0) {
       return res.status(400).json({
-        message: "Verifique os dados informados e tente novamente"
+        message: "Verifique os campos do formulário.",
+        errors
       });
     }
 
+    const cleanName = name.trim();
+    const cleanEmail = email.trim().toLowerCase();
+
+    // Proteger a senha
     const passwordHash = await argon2.hash(password, {
       type: argon2.argon2id
     });
 
+    // Salvar usuário no PostgreSQL
     const result = await pool.query(
       `INSERT INTO users (name, email, password_hash)
        VALUES ($1, $2, $3)
@@ -75,17 +70,24 @@ const cleanEmail = email.trim().toLowerCase();
   } catch (error) {
     if (error.code === "23505") {
       return res.status(409).json({
-        message: "Não foi possível realizar o cadastro com esse e-mail"
+        message: "Não foi possível realizar o cadastro com esse e-mail",
+        errors: {
+          email: "Não foi possível cadastrar este e-mail."
+        }
       });
     }
 
-    console.error("Erro no cadastro:", error.message);
+    // Diagnóstico no terminal do backend
+    console.error("Erro completo no cadastro:", error);
+    console.error("Código:", error.code);
+    console.error("Erros internos:", error.errors);
 
     return res.status(500).json({
-      message: "Erro interno do servidor"
+      message: "Não foi possível criar sua conta agora."
     });
   }
 });
+
 
 
 router.post("/login", async (req, res) => {

@@ -7,6 +7,7 @@ import { Login } from "./components/Login/Login";
 import { Cadastro } from "./components/Login/Cadastro";
 import { useState } from "react";
 import { LivroDetails } from "./components/LivroDetails";
+import { MyLibrary } from "./components/MyLibrary";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/livro/:id" element={<LivroDetails/>} />
+        <Route path="/minha-biblioteca" element={<MyLibrary/>}/>
       </Routes>
 
       <Footer />

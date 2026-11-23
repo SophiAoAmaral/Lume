@@ -41,7 +41,7 @@ export const Header = () => {
               <NavLink to="/busca?tipo=explorar">Explorar</NavLink>
             </li>
             <li>
-              <Link to="minhabiblioteca">Minha Biblioteca</Link>
+              <Link to="/minha-biblioteca">Minha Biblioteca</Link>
             </li>
             <li>
               <Link to="favoritos">Favoritos</Link>

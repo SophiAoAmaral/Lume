@@ -4,6 +4,7 @@ import "dotenv/config";
 import express from "express";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
+import libraryRoutes from "./routes/library.js";
 
 import { pool } from "./database.js";
 import authRoutes from "./routes/auth.js";
@@ -57,7 +58,9 @@ app.use(session({
 app.use("/api/auth", authRoutes);
 
 
-app.use("/api/translate", translateRoutes);
+//app.use("/api/translate", translateRoutes);
+
+app.use("/api/library", libraryRoutes);
 
 // Health Check
 app.get("/api/health", (req, res) => {
