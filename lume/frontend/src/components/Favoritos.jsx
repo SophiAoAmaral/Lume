@@ -66,7 +66,7 @@ useEffect(() => {
   return (
     <section>
         <button onClick={() => navigate(-1)} className="ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
-      <section className='container  flex flex-col items-center justify-center gap-5 mt-17 '>
+      <section className='container  flex flex-col items-center justify-center gap-5 mt-10 '>
         {message && (
                 <div
                   role="status"

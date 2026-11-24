@@ -4,6 +4,7 @@ import tumb from '../images/tumb.png'
 import { Search } from "lucide-react";
 import { Itensalta } from './Itensalta';
 import { Explorar } from './Explorar';
+import { LivrosMomento } from './LivrosQueroLer';
 
 export const Home = () => {
     const [search, setSearch] = useState("");
@@ -73,6 +74,8 @@ export const Home = () => {
 
 
             <Explorar/>
+
+            <LivrosMomento/>
         </section>
     
   )

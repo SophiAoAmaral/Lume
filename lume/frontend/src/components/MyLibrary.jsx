@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import {Link} from 'react-router'
+import {data, Link} from 'react-router'
 import { getMyLibrary , removeBookFromLibrary } from '../services/library'
 import semcapa from '../images/semcapa.png'
 import { useNavigate } from 'react-router'
@@ -19,8 +19,6 @@ export const MyLibrary = () => {
         async function fetchLibrary() {
             try{
                 const data = await getMyLibrary();
-
-
                 setBooks(data)
             }catch(err){
                 setError(err.message)
@@ -31,6 +29,7 @@ export const MyLibrary = () => {
         }
          fetchLibrary();
     }, []);
+console.log(books)
 
     async function handleRemoveBook(bookId) {
   if (removingId) return;
@@ -116,14 +115,14 @@ export const MyLibrary = () => {
                         Sem capa
                       </div>
                     )}
-                    <span className="text-xs text-[#B75E45] font-semibold">
+                    <span className="text-xs text-[#B75E45] font-semibold mt-3">
                       {book.status === "quero_ler"
                         ? "Quero ler"
                         : book.status === "lendo"
                           ? "Lendo"
                           : "Já li"}
                     </span>
-                    <h2 className='text-xl'>{book.title}</h2>
+                    <h2 className='text-xl mb-1'>{book.title}</h2>
                     <p className="text-sm text-black/70">{book.author || "Autor desconhecido"}</p>
       
                   </Link>
