@@ -30,7 +30,7 @@ export const MyLibrary = () => {
 
 
   return (
-    <section className='mt-5 flex flex-col items-center justify-center gap-5 container'>
+    <section className='mt-5 flex flex-col items-center justify-center gap-5 container '>
       {books.length === 0 ? (
         <p>Você ainda não adicionou nenhum livro.</p>
       ) : (

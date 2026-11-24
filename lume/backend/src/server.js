@@ -5,6 +5,7 @@ import express from "express";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
 import libraryRoutes from "./routes/library.js";
+import favoritesRoutes from "./routes/favorites.js";
 
 import { pool } from "./database.js";
 import authRoutes from "./routes/auth.js";
@@ -61,6 +62,8 @@ app.use("/api/auth", authRoutes);
 //app.use("/api/translate", translateRoutes);
 
 app.use("/api/library", libraryRoutes);
+
+app.use("/api/favorites", favoritesRoutes);
 
 // Health Check
 app.get("/api/health", (req, res) => {

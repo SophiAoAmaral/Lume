@@ -58,7 +58,7 @@ return (
     ) : (
       <div className="flex gap-5 overflow-x-auto pb-3 pt-4">
         {data.map((item) => (
-          <div key={item.key} className="w-[150px] shrink-0 flex flex-col ">
+          <Link to={`/livro/${item.key.split("/").pop()}`} key={item.key} className="w-[150px] shrink-0 flex flex-col ">
             <img
               src={
                 item.cover_i ??  item.cover_id
@@ -73,7 +73,7 @@ return (
             <span className="text-sm text-gray-500 mt-2 line-clamp-1">
               {item.author_name}
             </span>
-          </div>
+          </Link>
         ))}
       </div>
     )}

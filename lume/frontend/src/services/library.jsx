@@ -32,3 +32,26 @@ export async function getMyLibrary() {
 
   return data.books;
 }
+
+
+export async function toggleFavorite(bookId, favorite) {
+  const response = await fetch(
+    `/api/library/${bookId}/favorite`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({ favorite })
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Erro ao favoritar livro.");
+  }
+
+  return data.book;
+}

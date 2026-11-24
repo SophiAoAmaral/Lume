@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router";
 import { useUser } from "../context/UserContext";
 import { useNavigate } from "react-router";
 import { addBookToLibrary } from "../services/library";
+import { Heart } from "lucide-react";
+
+import { getFavorites,addFavorite, removeFavorite,} from "../services/favorites";
 
 export const LivroDetails = () => {
   const { id } = useParams();
@@ -17,6 +20,8 @@ export const LivroDetails = () => {
   const [error, setError] = useState("");
   const [notification, setNotification] = useState("");
   const [saving, setSaving] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -123,7 +128,41 @@ async function handleAddLibrary(status) {
   } finally {
     setSaving(false);
   }
+};
+
+
+
+async function handleFavorite() {
+  if (!user || !book || favoriteLoading) return;
+
+  setFavoriteLoading(true);
+
+  try {
+    if (isFavorite) {
+      await removeFavorite(id);
+      setIsFavorite(false);
+      setNotification("Livro removido dos favoritos!");
+    } else {
+      const result = await addFavorite({
+        bookId: id,
+        title: book.title,
+        author,
+        coverId: book.covers?.find((id) => id > 0) ?? null
+      });
+
+      console.log("Favorito salvo:", result);
+
+      setIsFavorite(true);
+      setNotification("Livro adicionado aos favoritos!");
+    }
+  } catch (error) {
+    console.error("Erro ao favoritar:", error);
+    setNotification(error.message);
+  } finally {
+    setFavoriteLoading(false);
+  }
 }
+
 
 
   useEffect(() => {
@@ -136,11 +175,9 @@ async function handleAddLibrary(status) {
     return () => clearTimeout(timer);
   }, [notification]);
 
-  if (loading) return <p>Carregando livro...</p>;
-  if (error) return <p role="alert">{error}</p>;
-  if (!book) return null;
+  
 
-  const cover = book.covers?.find((id) => id > 0);
+
 
   function handleOpenLibrary() {
     if (!user) {
@@ -154,76 +191,143 @@ async function handleAddLibrary(status) {
 
     setShowOptions((prev) => !prev);
   }
+
+
+useEffect(() => {
+  if (!user || !id) {
+    setIsFavorite(false);
+    return;
+  }
+
+  let active = true;
+
+  async function checkFavorite() {
+    try {
+      setIsFavorite(false);
+
+      const favorites = await getFavorites();
+
+      if (active) {
+        setIsFavorite(
+          favorites.some((item) => item.book_id === id)
+        );
+      }
+    } catch (error) {
+      console.error("Erro ao consultar favoritos:", error);
+    }
+  }
+
+  checkFavorite();
+
+  return () => {
+    active = false;
+  };
+}, [id, user?.id]);
+
+
+const cover = book?.covers?.find((id) => id > 0);
+
+  if (loading) return <p className="text-center  mt-30 mb-90 text-3xl font-bold">Carregando livro...</p>;
+  if (error) return <p role="alert">{error}</p>;
+  if (!book) return null;
   return (
-    <section className="container mt-20">
-      <div>
-        {cover && (
-          <div className="flex gap-20 ">
-            <div className="ml-60">
-              <img
-                className=" w-[280px] h-auto max-w-none object-contain rounded-lg"
-                src={`https://covers.openlibrary.org/b/id/${cover}-L.jpg`}
-                alt={`Capa de ${book.title}`}
-              />
-            </div>
-
-            <div>
-              {notification && (
-                <p className="library-notification" role="status">
-                  {notification}
-                </p>
-              )}
-              <h1>{book.title}</h1>
-              <p>Autor: {author || "Não informado"}</p>
-
-              <p>
-                {typeof book.description === "string"
-                  ? book.description
-                  : book.description?.value || "Descrição indisponível."}
-              </p>
-
-              <button
-                type="button"
-                onClick={handleOpenLibrary}
-                className="bg-[#B75E45]  px-5 py-3 rounded-xl cursor-pointer"
-              >
-                {status || "Adicionar à biblioteca"}
-              </button>
-
-              {showOptions && user && (
-                <div className="flex flex-col gap-2 mt-2">
-                  {showOptions && user && (
-                    <div className="flex flex-col gap-2 mt-2">
-                      <button
-                        type="button"
-                        disabled={saving}
-                        onClick={() => handleAddLibrary("quero_ler")}
-                      >
-                        Quero ler
-                      </button>
-
-                      <button
-                        type="button"
-                        disabled={saving}
-                        onClick={() => handleAddLibrary("lendo")}
-                      >
-                        Lendo
-                      </button>
-
-                      <button
-                        type="button"
-                        disabled={saving}
-                        onClick={() => handleAddLibrary("ja_li")}
-                      >
-                        Já li
-                      </button>
-                    </div>
+    <section>
+       <Link to='/' className="ml-90 block mt-10"> ← Voltar</Link>
+      <div className="container mt-15 h-[65vh]">
+        <div>
+          {cover && (
+            <div className="flex gap-20 ">
+              <div className="ml-60">
+                <img
+                  className=" w-[280px] h-auto max-w-none object-contain rounded-lg"
+                  src={`https://covers.openlibrary.org/b/id/${cover}-L.jpg`}
+                  alt={`Capa de ${book.title}`}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                {notification && (
+                  <p className="text-green-600" role="status">
+                    {notification}
+                  </p>
+                )}
+                <div className="flex justify-between gap-20">
+      
+                  <h1 className="text-3xl font-semibold">{author || "Não informado"}</h1>
+                  {user && (
+                    <button
+                      type="button"
+                      onClick={handleFavorite}
+                      disabled={favoriteLoading}
+                      className="cursor-pointer"
+                    >
+                      <Heart
+                        size={26}
+                        color="#FF2C2C"
+                        fill={isFavorite ? "#FF2C2C" : "none"}
+                      />
+                    </button>
                   )}
                 </div>
-              )}
+                <div>
+                  <p>
+                    Publicado em: {book.first_publish_date || "Não informado"}
+                  </p>
+                  <div className=" flex gap-2 flex-wrap my-2">
+                    {book.subjects?.slice(1, 5).map((subject) => (
+                      <span key={subject} className="p-2 rounded-3xl border text-xs font-medium">
+                        {subject}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <p>
+                  {typeof book.description === "string"
+                    ? book.description
+                    : book.description?.value || "Descrição indisponível."}
+                </p>
+                <button
+                  type="button"
+                  onClick={handleOpenLibrary}
+                  className="bg-[#000000] text-white hover:bg-black/90 px-5 transition py-3 rounded-xl cursor-pointer mt-4"
+                >
+                  {status || "Adicionar à biblioteca"}
+                </button>
+                {showOptions && user && (
+                  <div className="flex flex-col gap-2 mt-2">
+                    {showOptions && user && (
+                      <div className="flex flex-col gap-2 mt-2">
+                        <button
+                          type="button"
+                          disabled={saving}
+                          onClick={() => handleAddLibrary("quero_ler")}
+                          className="cursor-pointer"
+                        >
+                          Quero ler
+                        </button>
+                        <button
+                          type="button"
+                          disabled={saving}
+                          onClick={() => handleAddLibrary("lendo")}
+                           className="cursor-pointer"
+                        >
+                          Lendo
+                        </button>
+                        <button
+                          type="button"
+                          disabled={saving}
+                          onClick={() => handleAddLibrary("ja_li")}
+                           className="cursor-pointer"
+                        >
+                          Já li
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </section>
   );

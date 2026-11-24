@@ -123,4 +123,46 @@ router.delete("/:bookId", async (req, res) => {
 });
 
 
+router.patch("/:bookId/favorite", async (req, res) => {
+  try {
+    const { bookId } = req.params;
+    const { favorite } = req.body ?? {};
+
+    if (typeof favorite !== "boolean") {
+      return res.status(400).json({
+        message: "Favorito deve ser true ou false."
+      });
+    }
+
+ const result = await pool.query(
+   `SELECT book_id, title, author, cover_id,
+          status, is_favorite, created_at
+   FROM user_books
+   WHERE user_id = $1
+   ORDER BY created_at DESC`,
+   [req.session.userId],
+ );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        message: "Livro não encontrado na biblioteca."
+      });
+    }
+
+    return res.json({
+      message: "Favorito atualizado!",
+      book: result.rows[0]
+    });
+
+  } catch (error) {
+    console.error("Erro ao favoritar:", error);
+
+    return res.status(500).json({
+      message: "Não foi possível atualizar o favorito."
+    });
+  }
+});
+
+
+
 export default router;

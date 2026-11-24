@@ -30,7 +30,7 @@ export const Home = () => {
     
   return (
 
-        <section className='container'>
+        <section className='container' id='home'>
             <div  className='grid grid-cols-2 mt-20'>
                 <div className='md:w-150 flex flex-col gap-3 mt-10'>
                     <span className='text-terracota-200 font-bold text-xs'>Descoberta de livros</span>

@@ -8,6 +8,7 @@ import { Cadastro } from "./components/Login/Cadastro";
 import { useState } from "react";
 import { LivroDetails } from "./components/LivroDetails";
 import { MyLibrary } from "./components/MyLibrary";
+import { Favoritos } from "./components/Favoritos";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/livro/:id" element={<LivroDetails/>} />
         <Route path="/minha-biblioteca" element={<MyLibrary/>}/>
+        <Route path="/favoritos" element={<Favoritos/>}/>
       </Routes>
 
       <Footer />

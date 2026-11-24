@@ -44,7 +44,7 @@ export const Header = () => {
               <Link to="/minha-biblioteca">Minha Biblioteca</Link>
             </li>
             <li>
-              <Link to="favoritos">Favoritos</Link>
+              <Link to="/favoritos">Favoritos</Link>
             </li>
           </ul>
         </nav>
