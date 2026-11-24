@@ -1,13 +1,19 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import {Link} from 'react-router'
-import { getMyLibrary } from '../services/library'
+import { getMyLibrary , removeBookFromLibrary } from '../services/library'
 import semcapa from '../images/semcapa.png'
+import { useNavigate } from 'react-router'
+
+import { Trash2 } from "lucide-react";
 
 export const MyLibrary = () => {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [removingId, setRemovingId] = useState(null);
+    const [message, setMessage] = useState("")
+    const navigate = useNavigate()
 
     useEffect(()=>{
         async function fetchLibrary() {
@@ -25,47 +31,119 @@ export const MyLibrary = () => {
         }
          fetchLibrary();
     }, []);
-      if (loading) return <p>Carregando biblioteca...</p>;
+
+    async function handleRemoveBook(bookId) {
+  if (removingId) return;
+
+  const confirmRemove = window.confirm(
+    "Deseja remover este livro da sua biblioteca?"
+  );
+
+  if (!confirmRemove) return;
+
+  setRemovingId(bookId);
+  setError("");
+
+  try {
+    await removeBookFromLibrary(bookId);
+
+    setBooks((previous) =>
+      previous.filter((book) => book.book_id !== bookId)
+    );
+    setMessage("Livro removido da biblioteca com sucesso!!")
+
+  } catch (error) {
+    setError(error.message);
+  } finally {
+    setRemovingId(null);
+  }
+}
+
+  useEffect(() => {
+    if (!message) return;
+
+    const timer = setTimeout(() => {
+      setMessage("");
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [setMessage]);
+
+  
+      if (loading) return <p className='text-center mt-50 h-[40vh] text-3xl'>Carregando biblioteca...</p>;
       if (error) return <p>{error}</p>;
 
 
   return (
-    <section className='mt-5 flex flex-col items-center justify-center gap-5 container '>
-      {books.length === 0 ? (
-        <p>Você ainda não adicionou nenhum livro.</p>
-      ) : (
-        <div className='grid grid-cols-4 mt-10 gap-20'>
-          {books.map((book) => (
-            <Link key={book.book_id} to={`/livro/${book.book_id}`}>
-              {book.cover_id ? (
-                <img
-                  src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`}
-                  alt={book.title}
-                  className=" object-contain rounded-lg"
-                />
-              ) : (
-                <div className="w-[180px] h-[260px] bg-[#E8D9C8] rounded-lg flex items-center justify-center">
-                  Sem capa
+    <section>
+      <button onClick={() => navigate(-1)} className="ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
+      <section className="mt-5 flex flex-col items-center justify-center gap-5 container ">
+      
+        <div>
+              {message && (
+                <div
+                  role="status"
+                  className="bg-green-100 text-green-800 px-4 py-3 rounded-lg mb-5"
+                >
+                  {message}
                 </div>
               )}
-
-              <h2>{book.title}</h2>
-               <p className="">
-                {book.author || "Autor desconhecido"}
-              </p>
-
-              <span className="text-sm text-[#B75E45]">
-                {book.status === "quero_ler"
-                  ? "Quero ler"
-                  : book.status === "lendo"
-                    ? "Lendo"
-                    : "Já li"}
-              </span>
-
-            </Link>
-          ))}
-        </div>
-      )}
+            </div>
+        {books.length === 0 ? (
+          <p className="text-2xl h-[40vh] mt-50">
+            Você ainda não adicionou nenhum livro.
+          </p>
+        ) : (
+          <div className="">
+            <h1 className="text-center text-2xl font-semibold">Sua biblioteca</h1>
+      
+            <div className="grid grid-cols-4 mt-10 gap-20">
+              {books.map((book) => (
+                <div>
+                  <Link
+                    key={book.book_id}
+                    to={`/livro/${book.book_id}`}
+                    className="flex flex-col"
+                  >
+                    {book.cover_id ? (
+                      <img
+                        src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`}
+                        alt={book.title}
+                        className="w-[180px] h-[260px] object-contain rounded-2xl"
+                      />
+                    ) : (
+                      <div className="w-[180px] h-[260px] bg-[#E8D9C8] rounded-lg flex items-center justify-center">
+                        Sem capa
+                      </div>
+                    )}
+                    <span className="text-xs text-[#B75E45] font-semibold">
+                      {book.status === "quero_ler"
+                        ? "Quero ler"
+                        : book.status === "lendo"
+                          ? "Lendo"
+                          : "Já li"}
+                    </span>
+                    <h2 className='text-xl'>{book.title}</h2>
+                    <p className="text-sm text-black/70">{book.author || "Autor desconhecido"}</p>
+      
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveBook(book.book_id)}
+                    disabled={removingId === book.book_id}
+                    title="Remover da biblioteca"
+                    aria-label={`Remover ${book.title} da biblioteca`}
+                    className=" text-sm mt-2 cursor-pointer flex gap-3 rounded-xl text-red-500 border-red-500 border px-1 py-2 hover:text-red-500/50 hover:border-red-500/50"
+                  >
+                    Remover dos favoritos
+                    <Trash2 size={20} color="" className='hover:text-red-500/50 ' />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
     </section>
   );
 }

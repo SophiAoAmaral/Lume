@@ -55,3 +55,21 @@ export async function toggleFavorite(bookId, favorite) {
 
   return data.book;
 }
+
+export async function removeBookFromLibrary(bookId) {
+  const response = await fetch(
+    `/api/library/${encodeURIComponent(bookId)}`,
+    {
+      method: "DELETE",
+      credentials: "include"
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Erro ao remover livro.");
+  }
+
+  return data;
+}
