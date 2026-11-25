@@ -63,19 +63,19 @@ console.log(books)
 
     const timer = setTimeout(() => {
       setMessage("");
-    }, 4000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [setMessage]);
 
   
-      if (loading) return <p className='text-center mt-50 h-[40vh] text-3xl'>Carregando biblioteca...</p>;
+      if (loading) return <p className='text-center mt-50 md:h-[40vh] h-[30vh] text-xl md:text-3xl'>Carregando biblioteca...</p>;
       if (error) return <p>{error}</p>;
 
 
   return (
     <section>
-      <button onClick={() => navigate(-1)} className="ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
+      <button onClick={() => navigate(-1)} className="md:ml-90 block mt-10 cursor-pointer ml-5"> ← Voltar</button>
       <section className="mt-5 flex flex-col items-center justify-center gap-5 container ">
       
         <div>
@@ -96,22 +96,22 @@ console.log(books)
           <div className="">
             <h1 className="text-center text-2xl font-semibold">Sua biblioteca</h1>
       
-            <div className="grid grid-cols-4 mt-10 gap-20">
+            <div className="grid md:grid-cols-4 mt-5 md:mt-10 md:gap-20 gap-5">
               {books.map((book) => (
-                <div>
+                <div className='md:border-0 border-b  border-black/20  p-5 flex flex-col items-center md:block'>
                   <Link
                     key={book.book_id}
                     to={`/livro/${book.book_id}`}
-                    className="flex flex-col"
+                    className="flex flex-col text-center items-center md:text-start"
                   >
                     {book.cover_id ? (
                       <img
                         src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`}
                         alt={book.title}
-                        className="w-[180px] h-[260px] object-contain rounded-2xl"
+                        className="w-[180px]  md:h-[260px] object-contain rounded-2xl"
                       />
                     ) : (
-                      <div className="w-[180px] h-[260px] bg-[#E8D9C8] rounded-lg flex items-center justify-center">
+                      <div className="md:w-[180px] md:h-[260px] bg-[#E8D9C8] rounded-lg flex items-center justify-center">
                         Sem capa
                       </div>
                     )}
@@ -132,7 +132,7 @@ console.log(books)
                     disabled={removingId === book.book_id}
                     title="Remover da biblioteca"
                     aria-label={`Remover ${book.title} da biblioteca`}
-                    className=" text-sm mt-2 cursor-pointer flex gap-3 rounded-xl text-red-500 border-red-500 border px-1 py-2 hover:text-red-500/50 hover:border-red-500/50"
+                    className="text-center  text-sm mt-2 cursor-pointer flex gap-3 rounded-xl text-red-500 border-red-500 border px-1 py-2 hover:text-red-500/50 hover:border-red-500/50"
                   >
                     Remover dos favoritos
                     <Trash2 size={20} color="" className='hover:text-red-500/50 ' />

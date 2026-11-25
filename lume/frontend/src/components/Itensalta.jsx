@@ -53,9 +53,9 @@ return (
     <div className=" flex justify-between items-center mb-4">
       <div>
         <span className="font-bold text-terracota-100 text-sm">Em alta esta semana</span>
-        <h2 className="text-4xl font-medium mt-2">Tá todo mundo lendo.</h2>
+        <h2 className="text-xl md:text-4xl font-medium mt-2">Tá todo mundo lendo.</h2>
       </div>
-      <button onClick={() => navigate("/busca?tipo=trending")} className="border py-2 px-4 rounded-xl cursor-pointer" >Ver Todos</button>
+      <button onClick={() => navigate("/busca?tipo=trending")} className=" md:border md:py-2 md:px-4  rounded-xl cursor-pointer text-xs" >Ver Todos</button>
     </div>
     {loading ? (
       <div className="flex gap-5 overflow-hidden">

@@ -100,7 +100,7 @@ useEffect(()=>{
 
   return (
     <div>
-        <button onClick={() => navigate(-1)} className="ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
+        <button onClick={() => navigate(-1)} className="md:ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
       <section className="container mt-5 flex flex-col items-center justify-center gap-5">
       
         {error ? "" : <h1 className='text-2xl font-semibold'>{titulo}</h1>}
@@ -114,7 +114,7 @@ useEffect(()=>{
           </div>
         )}
         {loading ? (
-          <div className="grid grid-cols-4 mt-10 gap-20">
+          <div className="grid md:grid-cols-4 mt-10 gap-20">
             {Array.from({ length: 20 }).map((_, index) => (
               <div key={index} className="w-[220px] shrink-0">
                 <div className="h-[290px] rounded-lg bg-stone-200 animate-pulse" />
@@ -123,12 +123,12 @@ useEffect(()=>{
             ))}
           </div>
         ) : (
-          <div className=" grid grid-cols-4 mt-10 gap-15">
+          <div className=" grid md:grid-cols-4 mt-10 gap-15">
             {data.map((data) => (
               <Link
                 key={data.key}
                 to={`/livro/${data.key.split("/").pop()}`}
-                className="w-[220px]"
+                className="w-[220px] border-b border-black/30 pb-10 md:pb-0 md:border-0"
               >
                 <img
                   src={

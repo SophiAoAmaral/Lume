@@ -5,12 +5,12 @@ import { Link } from 'react-router';
 export const Footer = () => {
   return (
     <footer className='border-2 border-black/10 mt-20'>
-      <div className='container border-b border-black/10 flex justify-between p-5'>
+      <div className='container border-b border-black/10 flex flex-wrap md:flex-nowrap md:justify-between p-5 items-center justify-center'>
         <div>
             <img src={logo} alt="logo" className='w-50 mb-4' />
-            <p className='font-medium'>Historias boas nunca acabam por aqui.</p>
+            <p className='font-medium text-xs md:text-base'>Historias boas nunca acabam por aqui.</p>
         </div>
-        <div className='flex gap-20'>
+        <div className='flex gap-10 md:gap-20 flex-wrap mt-5'>
           <div>
             <span className='text-black/60'>Navegar</span>
             <ul className='flex flex-col text-sm gap-2 **:hover:underline'>
@@ -22,7 +22,7 @@ export const Footer = () => {
           </div>
 
 
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 flex-wrap'>
             <span className='text-black/60'>Dados</span>
             <p className='text-xs'>API Open Library</p>
             <span className='text-xs'>https://openlibrary.org/dev</span>

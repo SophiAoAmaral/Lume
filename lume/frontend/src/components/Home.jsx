@@ -32,12 +32,12 @@ export const Home = () => {
   return (
 
         <section className='container' id='home'>
-            <div  className='grid grid-cols-2 mt-20'>
+            <div  className='grid md:grid-cols-2 md:mt-20'>
                 <div className='md:w-150 flex flex-col gap-3 mt-10'>
-                    <span className='text-terracota-200 font-bold text-xs'>Descoberta de livros</span>
-                    <h1 className='text-5xl font-bold'>Sua próxima obsessão começa aqui.</h1>
-                    <p className='text-texto'>Descubra histórias incríveis, encontre novas perspectivas e transforme sua próxima leitura em uma experiência.</p>
-                    <form onSubmit={handleSubmit} className='border border-gray-400 w-[75%]  flex gap-2 rounded-2xl p-1 bg-white '>
+                    <span className='text-terracota-200 font-bold text-xs text-center md:text-start' >Descoberta de livros</span>
+                    <h1 className='text-5xl font-bold  text-center md:text-start'>Sua próxima obsessão começa aqui.</h1>
+                    <p className='text-texto  text-center md:text-start'>Descubra histórias incríveis, encontre novas perspectivas e transforme sua próxima leitura em uma experiência.</p>
+                    <form onSubmit={handleSubmit} className='border border-gray-400 md:w-[75%]  flex gap-2 rounded-2xl p-1 bg-white '>
                         <Search size={25} strokeWidth={2} color="#242424" className='self-center ml-3' />
                         <input 
                          type="text" 
@@ -47,9 +47,9 @@ export const Home = () => {
                         <button type='submit' className='bg-black text-white px-5 py-2 rounded-2xl cursor-pointer'>Buscar</button>
                     </form>
 
-                    <div>
-                        <span className='mb-2 block'>Populares: </span>
-                        <div className='flex flex-wrap gap-2'>
+                    <div className='mb-10 md:mb-0'>
+                        <span className='mb-2 block  text-center md:text-start'>Populares: </span>
+                        <div className='flex flex-wrap gap-2 items-center justify-center md:justify-start md:items-start '>
                             {sugestoes.map((item)=>(
                                 <button
                                 key={item.nome}

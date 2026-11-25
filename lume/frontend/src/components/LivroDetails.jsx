@@ -232,14 +232,14 @@ const cover = book?.covers?.find((id) => id > 0);
   if (!book) return null;
   return (
     <section>
-       <button onClick={() => navigate(-1)} className="ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
-      <div className="container mt-15 h-[65vh]">
+       <button onClick={() => navigate(-1)} className=" ml-5 md:ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
+      <div className="container mt-15 md:h-[65vh]">
         <div>
           {cover && (
-            <div className="flex gap-20 ">
-              <div className="ml-60">
+            <div className="flex  flex-wrap gap-20 ">
+              <div className="md:ml-60 ml-3">
                 <img
-                  className=" w-[280px] h-auto max-w-none object-contain rounded-lg"
+                  className=" md:w-[280px] h-auto max-w-none object-contain rounded-lg"
                   src={`https://covers.openlibrary.org/b/id/${cover}-L.jpg`}
                   alt={`Capa de ${book.title}`}
                 />

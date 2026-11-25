@@ -33,7 +33,7 @@ export const Header = () => {
           <img src={logo} alt="" className="w-40 object-contain" />
         </Link>
         <nav>
-          <ul className="flex gap-6 ">
+          <ul className="flex gap-6 flex-wrap">
             <li>
               <Link to="/">Home</Link>
             </li>
