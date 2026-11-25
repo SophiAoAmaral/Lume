@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 export const Footer = () => {
   return (
-    <footer className='border-2 border-black/10 mt-20'>
+    <footer className='border-2 border-black/10 md:mt-20 '>
       <div className='container border-b border-black/10 flex flex-wrap md:flex-nowrap md:justify-between p-5 items-center justify-center'>
         <div>
             <img src={logo} alt="logo" className='w-50 mb-4' />

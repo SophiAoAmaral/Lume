@@ -55,14 +55,14 @@ async function handleRegister(e) {
   return (
     <section className="background">
       <div className="container pt-30">
-        <div className="bg-[#ffff] flex flex-col items-center justify-center w-130 m-auto rounded-3xl py-5">
+        <div className="bg-[#ffff] flex flex-col p-5 md:items-center justify-center md:w-130 m-auto rounded-3xl py-5">
           <Link>
-            <img src={logo} alt="logo" className="w-50" />
+            <img src={logo} alt="logo" className="md:w-50  w-40 m-auto md:m-0" />
           </Link>
-          <h1 className="my-2 text-3xl font-bold text-start">
+          <h1 className="my-2 text-3xl font-bold  text-center md:text-start">
             Comece sua estante
           </h1>
-          <p className="text-sm font-semibold text-black/60 mb-3 w-100">
+          <p className="text-xs md:text-sm font-semibold text-black/60 mb-3 md:w-100 text-center px-3 md:px-0">
             Crie sua conta em menos de um minuto. Dá para ajustar tudo depois.
           </p>
           <form action="" className="flex flex-col " onSubmit={handleRegister}>
@@ -77,7 +77,7 @@ async function handleRegister(e) {
               value={name}
               required
               onChange={(e) => setName(e.target.value)}
-              className={` ${error ? "border-red-500" : "border-[#E0DBD0]"} border border-[#E0DBD0]  w-100 rounded-2xl py-2 px-4   outline-0  `}
+              className={` ${error ? "border-red-500" : "border-[#E0DBD0]"} border border-[#E0DBD0]  w-full md:w-100 rounded-2xl py-2 px-4   outline-0  `}
             />
             <label htmlFor="email" className="label">
               E-mail
@@ -90,7 +90,7 @@ async function handleRegister(e) {
               placeholder="voce@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={` ${error ? "border-red-500" : "border-[#E0DBD0]"} border border-[#E0DBD0]  w-100 rounded-2xl py-2 px-4   outline-0  `}
+              className={` ${error ? "border-red-500" : "border-[#E0DBD0]"} border border-[#E0DBD0] w-full md:w-100 rounded-2xl py-2 px-4   outline-0  `}
             />
             {errors.email && (
               <p className="text-xs mt-1 text-red-500 font-semibold" role="alert">
@@ -101,7 +101,7 @@ async function handleRegister(e) {
               Senha
             </label>
             <div
-              className={` ${error ? "border-red-500" : "border-[#E0DBD0]"} border border-[#E0DBD0]  w-100 rounded-2xl py-2 px-4   outline-0  flex  `}
+              className={` ${error ? "border-red-500" : "border-[#E0DBD0]"} border border-[#E0DBD0] w-full md:w-100 rounded-2xl py-2 px-4   outline-0  flex  `}
             >
               <input
                 type={showPassword ? "text" : "password"}
@@ -144,9 +144,9 @@ async function handleRegister(e) {
               {loading ? "Criando conta..." : "Criar conta"}
             </button>
           </form>
-          <span className="linha relative"></span>
+          <span className="linha md:relative"></span>
 
-          <span className="text-sm font-semibold mt-5 ">
+          <span className="text-sm font-semibold mt-5 block text-center md:text-start">
             Já tem uma conta?{" "}
             <Link to="/login" className="text-terracota-100">
               Entrar

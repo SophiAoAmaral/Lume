@@ -67,8 +67,8 @@ useEffect(() => {
 
   return (
     <div className=" background">
-      <section className="container pt-30">
-        <div className="flex flex-col items-center bg-white justify-center w-130 m-auto p-3 rounded-3xl ">
+      <section className="container md:pt-30 pt-15">
+        <div className="flex flex-col items-center bg-white justify-center  md:w-130 mx-auto p-4 md:p-3 rounded-3xl">
           
           <Link to="/" className="pt-10">
             <img src={logo} alt="" className="w-50 mb-5 " />
@@ -78,12 +78,12 @@ useEffect(() => {
               {successMessage}
             </p>
           )}
-          <h1 className="text-3xl font-bold">Que bom te ver de novo.</h1>
+          <h1 className="text-3xl font-bold text-center md:text-start">Que bom te ver de novo.</h1>
           <p className="text-black/50 mt-2 text-sm font-semibold">
             Entre para continuar de onde parou
           </p>
 
-          <form action="" className="flex flex-col" onSubmit={handleSubmit}>
+          <form action="" className="flex flex-col w-full p-2 md:p-0 md:w-100" onSubmit={handleSubmit}>
             <label htmlFor="email" className="block font-semibold text-sm mt-5">
               Email
             </label>
@@ -95,7 +95,7 @@ useEffect(() => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               name="email"
-              className={`${error ? "border-red-500" : "border-[#E0DBD0]"} border w-100 rounded-2xl py-2 px-4 bg-white   outline-0 `}
+              className={`${error ? "border-red-500" : "border-[#E0DBD0]"} border w-full md:w-100 rounded-2xl py-2 px-4 bg-white   outline-0 `}
             />
 
             <label
@@ -105,7 +105,7 @@ useEffect(() => {
               Senha
             </label>
             <div
-              className={` ${error ? "border-red-500" : "border-[#E0DBD0]"} border border-[#E0DBD0]  w-100 rounded-2xl py-2 px-4   outline-0  flex  `}
+              className={` ${error ? "border-red-500" : "border-[#E0DBD0]"} w-full border border-[#E0DBD0] md:w-100 rounded-2xl py-2 px-4   outline-0  flex  `}
             >
               <input
                 type={showPassword ? "text" : "password"}
@@ -115,7 +115,7 @@ useEffect(() => {
                 value={password}
                 required
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-[100%] outline-0"
+                className="w-[100%] w-full outline-0"
               />
               <button
                 type="button"
@@ -136,7 +136,7 @@ useEffect(() => {
             <button
               type="submit"
               disabled={loading}
-              className="border w-100 py-2 bg-black text-white rounded-2xl font-medium cursor-pointer mb-2"
+              className="border w-full md:w-100 py-2 bg-black text-white rounded-2xl font-medium cursor-pointer mb-2"
             >
               {loading ? "Entrando..." : "Entrar"}
             </button>
@@ -152,7 +152,7 @@ useEffect(() => {
           <span className="detail relative text-sm mt-3 text-black/50">ou</span>
           <button
             onClick={() => navigate("/")}
-            className="bg-white border border-[#E0DBD0] font-medium w-100 py-2 rounded-2xl mt-5 cursor-pointer"
+            className="bg-white border border-[#E0DBD0] font-medium w-full md:w-100 py-2 rounded-2xl mt-5 cursor-pointer"
           >
             Explorar sem conta
           </button>
