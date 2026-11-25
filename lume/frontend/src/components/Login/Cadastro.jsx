@@ -53,7 +53,7 @@ async function handleRegister(e) {
 
 
   return (
-    <section className="background">
+    <section className="background ">
       <div className="container pt-30">
         <div className="bg-[#ffff] flex flex-col p-5 md:items-center justify-center md:w-130 m-auto rounded-3xl py-5">
           <Link>

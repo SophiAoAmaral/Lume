@@ -66,7 +66,7 @@ useEffect(() => {
 
 
   return (
-    <div className=" background">
+    <div className=" background pb-10">
       <section className="container md:pt-30 pt-15">
         <div className="flex flex-col items-center bg-white justify-center  md:w-130 mx-auto p-4 md:p-3 rounded-3xl">
           
