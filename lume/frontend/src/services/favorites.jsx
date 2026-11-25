@@ -1,51 +1,29 @@
 
+import { apiRequest } from "./api";
+
+
 export async function getFavorites() {
-  const response = await fetch("/api/favorites", {
-    credentials: "include"
-  });
+  const data = await apiRequest("/api/favorites");
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
-
-  return data.books;
+  return data.books ?? [];
 }
 
+
 export async function addFavorite(book) {
-  const response = await fetch("/api/favorites", {
+  const data = await apiRequest("/api/favorites", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    credentials: "include",
     body: JSON.stringify(book)
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
 
   return data.book;
 }
 
+
 export async function removeFavorite(bookId) {
-  const response = await fetch(
+  return apiRequest(
     `/api/favorites/${encodeURIComponent(bookId)}`,
     {
-      method: "DELETE",
-      credentials: "include"
+      method: "DELETE"
     }
   );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
-
-  return data;
 }

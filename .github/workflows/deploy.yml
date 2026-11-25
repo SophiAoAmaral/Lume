@@ -40,6 +40,8 @@ jobs:
 
       - name: Gerar build
         working-directory: lume/frontend
+        env:
+          VITE_API_URL: https://lume-api-crzj.onrender.com
         run: npm run build
 
       - name: Configurar GitHub Pages

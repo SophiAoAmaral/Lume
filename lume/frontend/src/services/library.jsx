@@ -1,75 +1,36 @@
+
+import { apiRequest } from "./api";
+
+
 export async function addBookToLibrary(book) {
-  const response = await fetch("/api/library", {
+  return apiRequest("/api/library", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    credentials: "include",
     body: JSON.stringify(book)
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Erro ao salvar livro");
-  }
-
-  return data;
-}
-
+  });}
 
 export async function getMyLibrary() {
-  const response = await fetch("/api/library", {
-    method: "GET",
-    credentials: "include"
-  });
+  const data = await apiRequest("/api/library");
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Erro ao buscar biblioteca.");
-  }
-
-  return data.books;
+  return data.books ?? [];
 }
 
+export async function removeBookFromLibrary(bookId) {
+  return apiRequest(
+    `/api/library/${encodeURIComponent(bookId)}`,
+    {
+      method: "DELETE"
+    }
+  );
+}
 
 export async function toggleFavorite(bookId, favorite) {
-  const response = await fetch(
-    `/api/library/${bookId}/favorite`,
+  const data = await apiRequest(
+    `/api/library/${encodeURIComponent(bookId)}/favorite`,
     {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "include",
       body: JSON.stringify({ favorite })
     }
   );
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Erro ao favoritar livro.");
-  }
-
   return data.book;
-}
-
-export async function removeBookFromLibrary(bookId) {
-  const response = await fetch(
-    `/api/library/${encodeURIComponent(bookId)}`,
-    {
-      method: "DELETE",
-      credentials: "include"
-    }
-  );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Erro ao remover livro.");
-  }
-
-  return data;
 }

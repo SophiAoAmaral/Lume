@@ -5,37 +5,39 @@ import fs from "node:fs";
 
 const { Pool } = pg;
 
+// Verificar variável obrigatória
 if (!process.env.DATABASE_URL) {
   throw new Error(
-    "DATABASE_URL não foi carregada. Verifique o .env."
+    "DATABASE_URL não configurada. Verifique as variáveis de ambiente."
   );
 }
 
-const dbUrl = new URL(process.env.DATABASE_URL);
-
-console.log("Host:", dbUrl.hostname);
-console.log("Usuário configurado:", Boolean(dbUrl.username));
-console.log("Senha configurada:", Boolean(dbUrl.password));
-console.log("Banco:", dbUrl.pathname);
+// Certificado SSL do Supabase
 const ca = fs.readFileSync(
   new URL("../certificates/prod-ca-2021.crt", import.meta.url),
   "utf8"
 );
 
+// Pool de conexões PostgreSQL
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+
   max: 5,
+
   connectionTimeoutMillis: 10000,
+
+  idleTimeoutMillis: 30000,
+
   ssl: {
     ca,
     rejectUnauthorized: true
   }
 });
 
-console.log("Diagnóstico PostgreSQL:", {
-  host: pool.options.host,
-  port: pool.options.port,
-  userConfigured: Boolean(pool.options.user),
-  passwordType: typeof pool.options.password,
-  databaseConfigured: Boolean(pool.options.database)
+// Tratamento de erros em conexões ociosas
+pool.on("error", (error) => {
+  console.error(
+    "Erro inesperado na conexão PostgreSQL:",
+    error.message
+  );
 });

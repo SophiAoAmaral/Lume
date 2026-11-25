@@ -1,103 +1,137 @@
-import translateRoutes from "./routes/translate.js";
-import cors from "cors";
+
 import "dotenv/config";
+
 import express from "express";
+import cors from "cors";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
-import libraryRoutes from "./routes/library.js";
-import favoritesRoutes from "./routes/favorites.js";
 
 import { pool } from "./database.js";
+
 import authRoutes from "./routes/auth.js";
+import libraryRoutes from "./routes/library.js";
+import favoritesRoutes from "./routes/favorites.js";
+import translateRoutes from "./routes/translate.js";
 
 const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
+const PORT = process.env.PORT || 3000;
 
-const PgSession = connectPgSimple(session);
+// Validar as variáveis obrigatórias
+if (!process.env.SESSION_SECRET) {
+  throw new Error("SESSION_SECRET não configurado");
+}
 
-// Necessário quando o servidor está atrás de um proxy HTTPS
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL não configurada");
+}
+
+// Render utiliza um proxy HTTPS
 if (isProduction) {
   app.set("trust proxy", 1);
 }
 
-// CORS
-app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL,
-    process.env.FRONTEND_PROD_URL
-  ].filter(Boolean),
-  credentials: true
-}));
+// CORS - Frontend local e GitHub Pages
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  process.env.FRONTEND_PROD_URL
+].filter(Boolean);
 
-app.use(express.json());
+app.use(
+  cors({
+    origin(origin, callback) {
+      // Permitir requisições sem Origin (ex.: testes por curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
 
-// Sessões
-app.use(session({
-  store: new PgSession({
-    pool,
-    tableName: "user_sessions",
-    createTableIfMissing: true
-  }),
+      return callback(new Error("Origem não permitida pelo CORS"));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "X-CSRF-Token"]
+  })
+);
 
-  name: "lume.sid",
+// Middleware JSON
+app.use(express.json({ limit: "100kb" }));
 
-  secret: process.env.SESSION_SECRET,
-
-  resave: false,
-  saveUninitialized: false,
-
-  cookie: {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: "lax",
-    maxAge: 1000 * 60 * 60 * 24 * 7
-  }
-}));
-
-// Rotas de autenticação
-app.use("/api/auth", authRoutes);
-
-
-//app.use("/api/translate", translateRoutes);
-
-app.use("/api/library", libraryRoutes);
-
-app.use("/api/favorites", favoritesRoutes);
-
-// Health Check
+// Health check
 app.get("/api/health", (req, res) => {
   res.json({
     message: "API Lume funcionando!"
   });
 });
 
-// Teste do banco
+// Teste de conexão com Supabase
 app.get("/api/db-test", async (req, res) => {
   try {
     const result = await pool.query("SELECT NOW()");
 
-    res.json({
+    return res.json({
       message: "Banco conectado com sucesso!",
       timestamp: result.rows[0].now
     });
-
   } catch (error) {
-    console.error("Erro:", error.message);
-    console.error("Código:", error.code);
-    console.error("Causa:", error.cause?.message);
+    console.error("Erro ao conectar ao banco:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       message: "Erro ao conectar ao banco"
     });
   }
 });
 
-// Iniciar servidor
-if (!process.env.SESSION_SECRET) {
-  throw new Error("SESSION_SECRET não configurado");
-}
+// Sessões armazenadas no PostgreSQL
+const PgSession = connectPgSimple(session);
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Servidor Lume iniciado!");
+app.use(
+  session({
+    store: new PgSession({
+      pool,
+      tableName: "user_sessions",
+      createTableIfMissing: true
+    }),
+
+    name: "lume.sid",
+
+    secret: process.env.SESSION_SECRET,
+
+    resave: false,
+    saveUninitialized: false,
+
+    cookie: {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+  })
+);
+
+// Rotas da aplicação
+app.use("/api/auth", authRoutes);
+app.use("/api/library", libraryRoutes);
+app.use("/api/favorites", favoritesRoutes);
+app.use("/api/translate", translateRoutes);
+
+// Rota não encontrada
+app.use((req, res) => {
+  res.status(404).json({
+    message: "Rota não encontrada"
+  });
+});
+
+// Tratamento geral de erros
+app.use((err, req, res, next) => {
+  console.error("Erro no servidor:", err);
+
+  res.status(500).json({
+    message: "Erro interno do servidor"
+  });
+});
+
+// Iniciar servidor
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Servidor Lume iniciado na porta ${PORT}`);
 });
