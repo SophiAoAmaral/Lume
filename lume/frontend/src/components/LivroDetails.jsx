@@ -6,6 +6,7 @@ import { addBookToLibrary } from "../services/library";
 import { Heart } from "lucide-react";
 
 import { getFavorites,addFavorite, removeFavorite,} from "../services/favorites";
+import { ChevronDown, Bookmark, BookOpen, CheckCircle } from "lucide-react";
 
 export const LivroDetails = () => {
   const { id } = useParams();
@@ -227,19 +228,19 @@ useEffect(() => {
 
 const cover = book?.covers?.find((id) => id > 0);
 
-  if (loading) return <p className="text-center  mt-30 mb-90 text-3xl font-bold">Carregando livro...</p>;
+  if (loading) return <p className="text-center  mt-60 mb-90 text-3xl font-bold">Carregando livro...</p>;
   if (error) return <p role="alert">{error}</p>;
   if (!book) return null;
   return (
-    <section className="mb-10">
+    <section className="mb-20">
        <button onClick={() => navigate(-1)} className=" ml-5 md:ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
-      <div className="container mt-15 md:h-[65vh]">
+      <div className="container mt-15 ">
         <div>
           {cover && (
-            <div className="flex  flex-wrap gap-20 ">
+            <div className="flex md:flex-nowrap flex-wrap gap-20 ">
               <div className="md:ml-60 ml-3">
                 <img
-                  className=" md:w-[280px] h-auto max-w-none object-contain rounded-lg"
+                  className="w-[300px] md:w-[280px] h-auto max-w-none object-contain rounded-lg ml-[15px]"
                   src={`https://covers.openlibrary.org/b/id/${cover}-L.jpg`}
                   alt={`Capa de ${book.title}`}
                 />
@@ -250,7 +251,7 @@ const cover = book?.covers?.find((id) => id > 0);
                     {notification}
                   </p>
                 )}
-                <div className="flex justify-between gap-20">
+                <div className="flex justify-between  gap-20">
       
                   <h1 className="text-3xl font-semibold">{author || "Não informado"}</h1>
                   {user && (
@@ -272,7 +273,7 @@ const cover = book?.covers?.find((id) => id > 0);
                   <p>
                     Publicado em: {book.first_publish_date || "Não informado"}
                   </p>
-                  <div className=" flex gap-2 flex-wrap my-2">
+                  <div className=" flex gap-2 flex-wrap md:flex-nowrap my-2">
                     {book.subjects?.slice(1, 5).map((subject) => (
                       <span key={subject} className="p-2 rounded-3xl border text-xs font-medium">
                         {subject}
@@ -285,45 +286,52 @@ const cover = book?.covers?.find((id) => id > 0);
                     ? book.description
                     : book.description?.value || "Descrição indisponível."}
                 </p>
-                <button
-                  type="button"
-                  onClick={handleOpenLibrary}
-                  className="bg-[#000000] text-white hover:bg-black/90 px-5 transition py-3 rounded-xl cursor-pointer mt-4"
-                >
-                  {status || "Adicionar à biblioteca"}
-                </button>
-                {showOptions && user && (
-                  <div className="flex flex-col gap-2 mt-2">
-                    {showOptions && user && (
-                      <div className="flex flex-col gap-2 mt-2">
-                        <button
-                          type="button"
-                          disabled={saving}
-                          onClick={() => handleAddLibrary("quero_ler")}
-                          className="cursor-pointer"
-                        >
-                          Quero ler
-                        </button>
-                        <button
-                          type="button"
-                          disabled={saving}
-                          onClick={() => handleAddLibrary("lendo")}
-                           className="cursor-pointer"
-                        >
-                          Lendo
-                        </button>
-                        <button
-                          type="button"
-                          disabled={saving}
-                          onClick={() => handleAddLibrary("ja_li")}
-                           className="cursor-pointer"
-                        >
-                          Já li
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
+                
+<button
+  type="button"
+  onClick={handleOpenLibrary}
+  className="bg-black text-white hover:bg-black/90 px-5 py-3 rounded-xl cursor-pointer mt-4 transition flex items-center gap-3"
+>
+  {status || "Adicionar à biblioteca"}
+  <ChevronDown size={18} />
+</button>
+
+{showOptions && user && (
+  <div className="flex flex-col mt-2 bg-white border border-[#E0DBD0] rounded-xl p-2 shadow-sm">
+
+    <button
+      type="button"
+      disabled={saving}
+      onClick={() => handleAddLibrary("quero_ler")}
+      className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#F7F6F2] transition cursor-pointer text-left"
+    >
+      <Bookmark size={18} className="text-[#B75E45]" />
+      Quero ler
+    </button>
+
+    <button
+      type="button"
+      disabled={saving}
+      onClick={() => handleAddLibrary("lendo")}
+      className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#F7F6F2] transition cursor-pointer text-left"
+    >
+      <BookOpen size={18} className="text-[#B75E45]" />
+      Lendo
+    </button>
+
+    <button
+      type="button"
+      disabled={saving}
+      onClick={() => handleAddLibrary("ja_li")}
+      className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-[#F7F6F2] transition cursor-pointer text-left"
+    >
+      <CheckCircle size={18} className="text-[#B75E45]" />
+      Já li
+    </button>
+
+  </div>
+)}
+
               </div>
             </div>
           )}

@@ -74,7 +74,7 @@ console.log(books)
 
 
   return (
-    <section>
+    <section className='md:mb-20 '>
       <button onClick={() => navigate(-1)} className="md:ml-90 block mt-10 cursor-pointer ml-5"> ← Voltar</button>
       <section className="mt-5 flex flex-col items-center justify-center gap-5 container ">
       
