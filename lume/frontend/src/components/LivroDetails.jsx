@@ -231,7 +231,7 @@ const cover = book?.covers?.find((id) => id > 0);
   if (error) return <p role="alert">{error}</p>;
   if (!book) return null;
   return (
-    <section>
+    <section className="mb-10">
        <button onClick={() => navigate(-1)} className=" ml-5 md:ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
       <div className="container mt-15 md:h-[65vh]">
         <div>

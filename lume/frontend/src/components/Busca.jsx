@@ -99,8 +99,8 @@ useEffect(()=>{
 
 
   return (
-    <div>
-        <button onClick={() => navigate(-1)} className="md:ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
+    <div className='mb-10'>
+        <button onClick={() => navigate(-1)} className=" ml-5 md:ml-90 block mt-10 cursor-pointer"> ← Voltar</button>
       <section className="container mt-5 flex flex-col items-center justify-center gap-5">
       
         {error ? "" : <h1 className='text-2xl font-semibold'>{titulo}</h1>}

@@ -41,7 +41,7 @@ export const LivrosMomento = () => {
   }, []);
 
   return (
-    <section className="mt-20">
+    <section className="mt-20 mb-10 ">
       <span className="text-terracota-100 text-sm font-bold">
         Sua biblioteca
       </span>
