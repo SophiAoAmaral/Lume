@@ -65,6 +65,10 @@ useEffect(() => {
 
 
   if (loading) return <p className='text-center mt-50 md:h-[40vh] h-[30vh] text-xl md:text-3xl'>Carregando favoritos...</p>;
+  if (error) return  <div className='h-[71vh]  md:flex items-center justify-center flex-col gap-3' >
+        <p className='text-center  text-2xl '>{error}</p>
+         <Link to="/login" className='py-2 px-4 flex items-center gap-2 rounded-2xl bg-terracota-100 hover:bg-terracota-100/70 text-white cursor-pointer'>Entrar</Link>
+        </div>;
   return (
     <section className='text-center md:text-start'>
         <button onClick={() => navigate(-1)} className="ml-5 md:ml-90 block mt-10 cursor-pointer"> ← Voltar</button>

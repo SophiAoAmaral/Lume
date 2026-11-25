@@ -70,11 +70,14 @@ console.log(books)
 
   
       if (loading) return <p className='text-center mt-50 md:h-[40vh] h-[30vh] text-xl md:text-3xl'>Carregando biblioteca...</p>;
-      if (error) return <p>{error}</p>;
+      if (error) return  <div className='h-[71vh]  md:flex items-center justify-center flex-col gap-3' >
+      <p className='text-center  text-2xl '>{error}</p>
+       <Link to="/login" className='py-2 px-4 flex items-center gap-2 rounded-2xl hover:bg-terracota-100/70 bg-terracota-100 text-white cursor-pointer'>Entrar</Link>
+      </div>;
 
 
   return (
-    <section className='md:mb-20 '>
+    <section className='md:mb-20 md:h-[70vh]'>
       <button onClick={() => navigate(-1)} className="md:ml-90 block mt-10 cursor-pointer ml-5"> ← Voltar</button>
       <section className="mt-5 flex flex-col items-center justify-center gap-5 container ">
       

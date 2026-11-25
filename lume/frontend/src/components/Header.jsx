@@ -70,7 +70,8 @@ export const Header = () => {
             </div>
           )}
         </div>
-        {user ?  <span>Olá, {user.name}!</span> : ''}
+        
+        <div className='flex md:hidden'>{user ?  <span>Olá, {user.name}!</span> : ''}</div>
 
         <button
             className='md:hidden flex flex-col gap-1 '
