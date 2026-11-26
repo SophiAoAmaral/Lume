@@ -23,7 +23,7 @@ export const LivrosMomento = () => {
     }
     livrosLendo();
   }, []);
-  console.log(booksLendo);
+ 
 
   useEffect(() => {
     async function proximosLirvos() {

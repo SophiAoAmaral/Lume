@@ -19,7 +19,7 @@ export function UserProvider({children}){
             }
             const data = await response.json()
 
-           console.log("Usuário recuperado:", data);
+           
 
            setUser(data.user);
             }catch(err){

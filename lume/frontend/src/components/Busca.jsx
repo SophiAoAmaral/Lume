@@ -90,11 +90,10 @@ async function handleFetch() {
     setLoading(false);
   }
 }
-console.log(data)
+
 
 useEffect(()=>{
     handleFetch()
-    console.log(data)
 },[query, tipo, genero]);
 
 

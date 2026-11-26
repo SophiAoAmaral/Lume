@@ -24,7 +24,6 @@ export const Login = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-     console.time("Tempo do login");
 
     try{
       const data = await login(email, password);

@@ -29,7 +29,7 @@ export const MyLibrary = () => {
         }
          fetchLibrary();
     }, []);
-console.log(books)
+
 
     async function handleRemoveBook(bookId) {
   if (removingId) return;
@@ -101,7 +101,7 @@ console.log(books)
       
             <div className="grid md:grid-cols-4 mt-5 md:mt-10 md:gap-20 gap-5">
               {books.map((book) => (
-                <div className='md:border-0 border-b  border-black/20  p-5 flex flex-col items-center md:block'>
+                <div className='md:border-0 border-b border-black/20 p-5 flex flex-col items-center h-full'>
                   <Link
                     key={book.book_id}
                     to={`/livro/${book.book_id}`}
@@ -111,7 +111,7 @@ console.log(books)
                       <img
                         src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`}
                         alt={book.title}
-                        className="w-[180px]  md:h-[260px] object-contain rounded-2xl"
+                        className="w-[180px] h-[260px] object-contain rounded-2xl"
                       />
                     ) : (
                       <div className="md:w-[180px] md:h-[260px] bg-[#E8D9C8] rounded-lg flex items-center justify-center">
@@ -125,8 +125,8 @@ console.log(books)
                           ? "Lendo"
                           : "Já li"}
                     </span>
-                    <h2 className='text-xl mb-1'>{book.title}</h2>
-                    <p className="text-sm text-black/70">{book.author || "Autor desconhecido"}</p>
+                    <h2 className='text-xl h-[56px] line-clamp-2 text-center mb-1'>{book.title}</h2>
+                    <p className="text-sm text-black/70 mb-2">{book.author || "Autor desconhecido"}</p>
       
                   </Link>
                   <button
@@ -135,7 +135,7 @@ console.log(books)
                     disabled={removingId === book.book_id}
                     title="Remover da biblioteca"
                     aria-label={`Remover ${book.title} da biblioteca`}
-                    className="text-center  text-sm mt-2 cursor-pointer flex gap-3 rounded-xl text-red-500 border-red-500 border px-1 py-2 hover:text-red-500/50 hover:border-red-500/50"
+                    className="mt-auto text-sm cursor-pointer flex items-center justify-center gap-3 rounded-xl text-red-500 border-red-500 border px-2 py-2 hover:text-red-500/50 hover:border-red-500/50"
                   >
                     Remover dos favoritos
                     <Trash2 size={20} color="" className='hover:text-red-500/50 ' />

@@ -151,7 +151,7 @@ async function handleFavorite() {
         coverId: book.covers?.find((id) => id > 0) ?? null
       });
 
-      console.log("Favorito salvo:", result);
+     
 
       setIsFavorite(true);
       setNotification("Livro adicionado aos favoritos!");
